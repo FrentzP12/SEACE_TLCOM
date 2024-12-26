@@ -1,3 +1,4 @@
+import os
 from app.main import app  # Importa tu instancia de FastAPI desde app/main.py
 
 if __name__ == "__main__":
