@@ -9,7 +9,7 @@ from datetime import datetime
 async def lifespan(app: FastAPI):
     # Startup logic
     app.state.db = await asyncpg.create_pool(
-        dsn = "postgresql://postgres:040502@127.0.0.1:5432/DBLunes"
+        dsn = "postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
     )
     yield
     # Shutdown logic
