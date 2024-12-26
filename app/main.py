@@ -26,12 +26,24 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos los encabezados
 )
 
+# Montar la carpeta de archivos estáticos (frontend)
+frontend_path = os.path.join(os.path.dirname(__file__), "../frontend")
+app.mount("/static", StaticFiles(directory=frontend_path), name="static")
 
+# Ruta principal para servir index.html
+@app.get("/")
+async def serve_frontend():
+    index_file = os.path.join(frontend_path, "index.html")
+    if os.path.exists(index_file):
+        return FileResponse(index_file)
+    return JSONResponse({"error": "index.html no encontrado"}, status_code=404)
 @app.get("/contrataciones")
 async def get_contrataciones():
     async with app.state.db.acquire() as conn:
         rows = await conn.fetch("SELECT * FROM compiled_releases")
         return rows
+        
+# Resto de endpoints
 @app.get("/items")
 async def get_all_items():
     async with app.state.db.acquire() as conn:
