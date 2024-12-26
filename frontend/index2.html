@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Contrataciones Por Descripción de Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #results {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #results th, #results td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #results th {
+            background-color: #f4f4f4;
+            cursor: pointer;
+        }
+        #results th:nth-child(3) {
+            width: 40%; /* Ancho más grande para Item */
+        }
+        #results td:nth-child(3) {
+            white-space: normal; /* Permitir líneas múltiples */
+            word-wrap: break-word; /* Ajustar texto largo */
+        }
+        #row-count {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscar Contrataciones Por Descripción</h1>
+    <input type="text" id="search-input" placeholder="Ingrese palabras clave..." />
+    <button onclick="search()">Buscar</button>
+
+    <div id="row-count">Total de filas: 0</div>
+
+    <table id="results">
+        <thead>
+            <tr>
+                <th>OCID</th>
+                <th>Comprador</th>
+                <th>Item</th>
+                <th>Cantidad</th>
+                <th>Departamento</th>
+                <th onclick="sortTableByDate()">Fecha de Ingreso ⬍</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        let sortAscending = true;
+
+        async function search() {
+            const descripcion = document.getElementById("search-input").value;
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/buscar_descripcion/${descripcion}`);
+                const data = await response.json();
+
+                // Formatear las fechas y eliminar duplicados
+                const uniqueData = removeDuplicates(data.map(row => ({
+                    ...row,
+                    fecha_ingreso: formatDate(row.fecha_ingreso), // Formatear la fecha a DD/MM/YY
+                })));
+
+                populateTable(uniqueData);
+            } catch (error) {
+                console.error("Error al obtener datos:", error);
+            }
+        }
+
+        function removeDuplicates(data) {
+            const seen = new Set();
+            return data.filter(item => {
+                const key = `${item.ocid}|${item.item}|${item.fecha_ingreso}`; // Clave única basada en columnas clave
+                if (seen.has(key)) {
+                    return false; // Si ya existe, no lo incluimos
+                }
+                seen.add(key);
+                return true;
+            });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = String(date.getFullYear()).slice(-2); // Obtener los últimos 2 dígitos del año
+            return `${day}/${month}/${year}`;
+        }
+
+        function parseDate(dateString) {
+            // Convierte DD/MM/YY a un objeto Date
+            const [day, month, year] = dateString.split('/').map(Number);
+            return new Date(`20${year}`, month - 1, day);
+        }
+
+        function populateTable(data) {
+            const tableBody = document.querySelector("#results tbody");
+            tableBody.innerHTML = ""; // Limpiar resultados previos
+
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.ocid}</td>
+                    <td>${row.comprador}</td>
+                    <td>${row.item}</td>
+                    <td>${row.cantidad}</td>
+                    <td>${row.departamento}</td>
+                    <td>${row.fecha_ingreso}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // Actualizar la cuenta de filas
+            document.getElementById("row-count").innerText = `Total de filas: ${data.length}`;
+        }
+
+        function sortTableByDate() {
+            const tableBody = document.querySelector("#results tbody");
+            const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+            rows.sort((a, b) => {
+                const dateA = parseDate(a.cells[5].innerText); // Convertir DD/MM/YY a Date
+                const dateB = parseDate(b.cells[5].innerText); // Convertir DD/MM/YY a Date
+                return sortAscending ? dateA - dateB : dateB - dateA;
+            });
+
+            sortAscending = !sortAscending; // Cambiar orden para la próxima vez
+
+            // Volver a poblar la tabla con las filas ordenadas
+            tableBody.innerHTML = "";
+            rows.forEach(row => tableBody.appendChild(row));
+        }
+    </script>
+</body>
+</html>
