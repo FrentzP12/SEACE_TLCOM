@@ -1,2 +1,4 @@
 # Ignorar archivos .pyc
 *.pyc
+#Excluir entorno virtual
+venv/
