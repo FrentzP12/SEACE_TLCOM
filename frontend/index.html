@@ -49,7 +49,7 @@
             const departamento = document.getElementById("search-input").value;
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/contrataciones/${departamento}`);
+                const response = await fetch(`api/contrataciones/${departamento}`);
                 const data = await response.json();
 
                 const tableBody = document.querySelector("#results tbody");
