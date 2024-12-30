@@ -28,7 +28,7 @@ app.add_middleware(
 
 
 # Resto de endpoints
-@app.get("api/items")
+@app.get("/items")
 async def get_all_items():
     async with app.state.db.acquire() as conn:
         rows = await conn.fetch("SELECT * FROM items")
