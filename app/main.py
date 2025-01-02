@@ -4,15 +4,13 @@ from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
+import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup logic
-    app.state.db = await asyncpg.create_pool(
-        dsn = "postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
-    )
+    dsn = os.getenv("DATABASE_URL")
+    app.state.db = await asyncpg.create_pool(dsn=dsn)
     yield
-    # Shutdown logic
     await app.state.db.close()
 
 app = FastAPI(lifespan=lifespan)
