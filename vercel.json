@@ -13,7 +13,6 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "server.py" },
     { "src": "/static/(.*)", "dest": "/static/$1" },
-    { "src": "/buscar_descripcion/(.*)", "dest": "server.py" },
     { "src": "/", "dest": "/frontend/index2.html" }
   ]
 }
