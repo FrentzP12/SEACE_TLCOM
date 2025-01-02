@@ -28,9 +28,13 @@ app.add_middleware(
 # Resto de endpoints
 @app.get("/items")
 async def get_all_items():
-    async with app.state.db.acquire() as conn:
-        rows = await conn.fetch("SELECT * FROM items")
-        return rows
+    try:
+        async with app.state.db.acquire() as conn:
+            rows = await conn.fetch("SELECT * FROM items")
+            return [dict(row) for row in rows]  # Convertir registros a dict
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
+
 @app.get("/parties")
 async def get_all_parties():
     async with app.state.db.acquire() as conn:
