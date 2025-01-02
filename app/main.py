@@ -4,13 +4,15 @@ from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
-import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    dsn = os.getenv("DATABASE_URL")
-    app.state.db = await asyncpg.create_pool(dsn=dsn)
+    # Startup logic
+    app.state.db = await asyncpg.create_pool(
+        dsn = "postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    )
     yield
+    # Shutdown logic
     await app.state.db.close()
 
 app = FastAPI(lifespan=lifespan)
@@ -28,13 +30,9 @@ app.add_middleware(
 # Resto de endpoints
 @app.get("/items")
 async def get_all_items():
-    try:
-        async with app.state.db.acquire() as conn:
-            rows = await conn.fetch("SELECT * FROM items")
-            return [dict(row) for row in rows]  # Convertir registros a dict
-    except Exception as e:
-        return {"status": "error", "detail": str(e)}
-
+    async with app.state.db.acquire() as conn:
+        rows = await conn.fetch("SELECT * FROM items")
+        return rows
 @app.get("/parties")
 async def get_all_parties():
     async with app.state.db.acquire() as conn:
