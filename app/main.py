@@ -32,10 +32,16 @@ def root():
 # Resto de endpoints
 @app.get("/items")
 async def get_all_items():
-    async with app.state.db.acquire() as conn:
-        rows = await conn.fetch("SELECT * FROM items")
-        result = [dict(row) for row in rows]  # Convierte a lista de diccionarios
-        return result
+    try:
+        async with app.state.db.acquire() as conn:
+            rows = await conn.fetch("SELECT * FROM items")
+            result = [dict(row) for row in rows]  # Convierte a JSON
+            return result
+    except Exception as e:
+        return JSONResponse(
+            content={"error": "Error al acceder a la base de datos", "details": str(e)},
+            status_code=500
+        )
 
 @app.get("/parties")
 async def get_all_parties():
