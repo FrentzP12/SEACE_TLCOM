@@ -2,7 +2,9 @@ import asyncpg
 from fastapi import FastAPI, Query
 from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 
 @asynccontextmanager
@@ -26,6 +28,14 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos los encabezados
 )
 
+# Montar el directorio de frontend como archivos estáticos
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_index():
+    with open("frontend/index2.html") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content)
 
 # Resto de endpoints
 @app.get("/items")
