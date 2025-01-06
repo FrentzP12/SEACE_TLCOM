@@ -26,7 +26,9 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos los encabezados
 )
 
-
+@app.get("/")
+def root():
+    return {"message": "API funcionando correctamente"}
 # Resto de endpoints
 @app.get("/items")
 async def get_all_items():
