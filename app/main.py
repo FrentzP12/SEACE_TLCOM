@@ -7,21 +7,14 @@ from datetime import datetime
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Intentar conectar la base de datos
-    try:
-        app.state.db = await asyncpg.create_pool(
-            dsn="postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
-        )
-        print("Conexión a la base de datos establecida.")
-        yield
-    except Exception as e:
-        print(f"Error al conectar con la base de datos: {e}")
-        raise
-    finally:
-        # Liberar recursos al cerrar la aplicación
-        if hasattr(app.state, "db") and app.state.db:
-            await app.state.db.close()
-            print("Conexión a la base de datos cerrada.")
+    # Startup logic
+    app.state.db = await asyncpg.create_pool(
+        dsn = "postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    )
+    yield
+    # Shutdown logic
+    await app.state.db.close()
+
 app = FastAPI(lifespan=lifespan)
 
 # Habilitar CORS
@@ -33,23 +26,13 @@ app.add_middleware(
     allow_headers=["*"],  # Permite todos los encabezados
 )
 
-@app.get("/")
-def root():
-    return {"message": "API funcionando correctamente"}
+
 # Resto de endpoints
 @app.get("/items")
 async def get_all_items():
-    try:
-        async with app.state.db.acquire() as conn:
-            rows = await conn.fetch("SELECT * FROM items")
-            result = [dict(row) for row in rows]  # Convierte a JSON
-            return result
-    except Exception as e:
-        return JSONResponse(
-            content={"error": "Error al acceder a la base de datos", "details": str(e)},
-            status_code=500
-        )
-
+    async with app.state.db.acquire() as conn:
+        rows = await conn.fetch("SELECT * FROM items")
+        return rows
 @app.get("/parties")
 async def get_all_parties():
     async with app.state.db.acquire() as conn:
