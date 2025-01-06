@@ -34,7 +34,9 @@ def root():
 async def get_all_items():
     async with app.state.db.acquire() as conn:
         rows = await conn.fetch("SELECT * FROM items")
-        return rows
+        result = [dict(row) for row in rows]  # Convierte a lista de diccionarios
+        return result
+
 @app.get("/parties")
 async def get_all_parties():
     async with app.state.db.acquire() as conn:
