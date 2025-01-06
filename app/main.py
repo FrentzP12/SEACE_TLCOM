@@ -7,14 +7,21 @@ from datetime import datetime
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup logic
-    app.state.db = await asyncpg.create_pool(
-        dsn = "postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
-    )
-    yield
-    # Shutdown logic
-    await app.state.db.close()
-
+    # Intentar conectar la base de datos
+    try:
+        app.state.db = await asyncpg.create_pool(
+            dsn="postgresql://neondb_owner:VbdvNRPr2au7@ep-shrill-wind-a43e78up-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+        )
+        print("Conexión a la base de datos establecida.")
+        yield
+    except Exception as e:
+        print(f"Error al conectar con la base de datos: {e}")
+        raise
+    finally:
+        # Liberar recursos al cerrar la aplicación
+        if hasattr(app.state, "db") and app.state.db:
+            await app.state.db.close()
+            print("Conexión a la base de datos cerrada.")
 app = FastAPI(lifespan=lifespan)
 
 # Habilitar CORS
