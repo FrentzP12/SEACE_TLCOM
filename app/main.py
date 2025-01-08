@@ -22,10 +22,10 @@ app = FastAPI(lifespan=lifespan)
 # Habilitar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permite todos los orígenes (puedes especificar solo los necesarios)
+    allow_origins=["*"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Permite todos los métodos HTTP (GET, POST, etc.)
-    allow_headers=["*"],  # Permite todos los encabezados
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 # Montar el directorio de frontend como archivos estáticos
