@@ -73,16 +73,18 @@
     
         /* Tabla */
         #results-container {
-            overflow-x: auto; /* Hacer scroll horizontal si la tabla es más ancha */
+            overflow-x: auto; /* Permitir scroll horizontal */
+            margin-top: 20px;
         }
     
         #results {
-            margin-top: 20px;
             border-collapse: collapse;
             width: 100%;
+            min-width: 600px; /* Asegura que la tabla tenga un ancho mínimo */
         }
     
-        #results th, #results td {
+        #results th,
+        #results td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -91,6 +93,11 @@
         #results th {
             background-color: #007bff;
             color: white;
+        }
+    
+        #results td {
+            word-wrap: break-word; /* Ajustar contenido de las celdas */
+            white-space: normal;
         }
     
         /* Botones */
@@ -141,8 +148,13 @@
                 width: 100%; /* Hacer el botón más ancho */
             }
     
-            #results th, #results td {
+            #results th,
+            #results td {
                 font-size: 0.9rem; /* Reducir el tamaño del texto en la tabla */
+            }
+    
+            #results {
+                font-size: 0.9rem; /* Ajustar tamaño de fuente general */
             }
         }
     </style>    
