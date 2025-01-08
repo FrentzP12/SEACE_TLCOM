@@ -3,62 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Contrataciones Por Descripción de Item</title>
+    <title>Buscar Contrataciones</title>
+    <!-- Favicon -->
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+    <!-- Estilos -->
     <style>
+        /* General */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            background: url('/static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
         }
+
+        /* Cabecera */
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 8px 15px;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Contenedor principal */
+        .container {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            margin: 20px auto;
+            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        /* Tabla */
         #results {
             margin-top: 20px;
             border-collapse: collapse;
             width: 100%;
         }
+
         #results th, #results td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         #results th {
-            background-color: #f4f4f4;
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Botones */
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
-        #results th:nth-child(3) {
-            width: 40%; /* Ancho más grande para Item */
+
+        .btn:hover {
+            background-color: #0056b3;
         }
-        #results td:nth-child(3) {
-            white-space: normal; /* Permitir líneas múltiples */
-            word-wrap: break-word; /* Ajustar texto largo */
-        }
-        #row-count {
-            margin-top: 10px;
-            font-weight: bold;
+
+        /* Input de búsqueda */
+        #search-input {
+            width: calc(100% - 90px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Buscar Contrataciones Por Descripción</h1>
-    <input type="text" id="search-input" placeholder="Ingrese palabras clave..." />
-    <button onclick="search()">Buscar</button>
+    <header>
+        <h1>Contrataciones</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/items">Items</a>
+            <a href="/parties">Parties</a>
+            <a href="/tenders">Tenders</a>
+        </nav>
+    </header>
 
-    <div id="row-count">Total de filas: 0</div>
+    <div class="container">
+        <h2>Buscar Contrataciones por Descripción</h2>
+        <input type="text" id="search-input" placeholder="Ingrese palabras clave...">
+        <button class="btn" onclick="search()">Buscar</button>
 
-    <table id="results">
-        <thead>
-            <tr>
-                <th>OCID</th>
-                <th>Comprador</th>
-                <th>Item</th>
-                <th>Cantidad</th>
-                <th>Departamento</th>
-                <th onclick="sortTableByDate()">Fecha de Ingreso ⬍</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+        <div id="row-count">Total de filas: 0</div>
 
+        <table id="results">
+            <thead>
+                <tr>
+                    <th>OCID</th>
+                    <th>Comprador</th>
+                    <th>Item</th>
+                    <th>Cantidad</th>
+                    <th>Departamento</th>
+                    <th onclick="sortTableByDate()">Fecha de Ingreso ⬍</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
     <script>
         let sortAscending = true;
 
