@@ -183,28 +183,55 @@ h2 {
 }
 
 /* Estilos para la paginación */
-.pagination {
+/* Estilo del contenedor del paginador */
+.pagination-container {
     display: flex;
+    align-items: center;
     justify-content: center;
+    background-color: #FFA500; /* Naranja */
+    padding: 10px 20px;
+    border-radius: 10px;
     margin-top: 20px;
-    gap: 5px;
-}
-
-.pagination button {
-    background-color: #007bff;
     color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Botones del paginador */
+.pagination-container button {
+    background-color: #FFF;
+    color: #333;
+    border: 1px solid #DDD;
     border-radius: 5px;
-    transition: background 0.3s ease;
+    padding: 5px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
-.pagination button:hover {
-    background-color: #0056b3;
+/* Hover y activo */
+.pagination-container button:hover {
+    background-color: #FFD700;
+    color: #FFF;
+    border-color: #FFA500;
 }
 
-.pagination button.disabled {
-    background-color: #ccc;
+.pagination-container button.active {
+    background-color: #333;
+    color: white;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Botones deshabilitados */
+.pagination-container button:disabled {
+    background-color: #DDD;
+    color: #AAA;
     cursor: not-allowed;
+}
+
+/* Información sobre resultados */
+.pagination-info {
+    margin-right: 20px;
+    font-size: 0.9rem;
 }

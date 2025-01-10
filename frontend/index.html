@@ -65,9 +65,15 @@
         </div>
     
         <!-- Paginación -->
-        <div class="pagination" id="pagination">
-            <!-- Botones generados dinámicamente -->
+        <div id="pagination" class="pagination-container">
+            <span class="pagination-info" id="pagination-info"></span>
+            <button onclick="changePage('first')" id="btn-first">&laquo;</button>
+            <button onclick="changePage('prev')" id="btn-prev">&lt;</button>
+            <div id="page-buttons"></div>
+            <button onclick="changePage('next')" id="btn-next">&gt;</button>
+            <button onclick="changePage('last')" id="btn-last">&raquo;</button>
         </div>
+        
     </div>
     
     <script src="/static/js/script.js"></script>
