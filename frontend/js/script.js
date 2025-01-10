@@ -1,7 +1,10 @@
 let sortAscending = true;
+let currentPage = 1;
+let itemsPerPage = 15; // Máximo de 15 elementos por página
+let allData = []; // Datos completos
 
 async function search(event) {
-    event.preventDefault(); // Prevenir la recarga del formulario
+    event.preventDefault();
 
     const descripcion = document.getElementById("descripcion").value;
     const departamento = document.getElementById("departamento").value;
@@ -19,43 +22,28 @@ async function search(event) {
 
     try {
         const response = await fetch(`/buscar_items?${params.toString()}`);
-        const data = await response.json();
+        allData = await response.json();
 
-        // Formatear las fechas y eliminar duplicados
-        const uniqueData = removeDuplicates(data.map(row => ({
+        // Formatear las fechas
+        allData = allData.map(row => ({
             ...row,
             fecha_ingreso: formatDate(row.fecha_ingreso),
-        })));
+        }));
 
-        populateTable(uniqueData);
+        currentPage = 1; // Reiniciar a la primera página
+        renderPage();
     } catch (error) {
         console.error("Error al obtener datos:", error);
     }
 }
 
-function removeDuplicates(data) {
-    const seen = new Set();
-    return data.filter(item => {
-        const key = `${item.comprador}|${item.item}|${item.fecha_ingreso}`;
-        if (seen.has(key)) {
-            return false;
-        }
-        seen.add(key);
-        return true;
-    });
-}
+function renderPage() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = allData.slice(startIndex, endIndex);
 
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-}
-
-function parseDate(dateString) {
-    const [day, month, year] = dateString.split('/').map(Number);
-    return new Date(year, month - 1, day);
+    populateTable(pageData);
+    updatePagination();
 }
 
 function populateTable(data) {
@@ -75,21 +63,46 @@ function populateTable(data) {
         tableBody.appendChild(tr);
     });
 
-    document.getElementById("row-count").innerText = `Total de filas: ${data.length}`;
+    document.getElementById("row-count").innerText = `Total de filas: ${allData.length}`;
+}
+
+function updatePagination() {
+    const totalPages = Math.ceil(allData.length / itemsPerPage);
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.className = i === currentPage ? "btn disabled" : "btn";
+        button.onclick = () => {
+            currentPage = i;
+            renderPage();
+        };
+        pagination.appendChild(button);
+    }
 }
 
 function sortTableByDate() {
-    const tableBody = document.querySelector("#results tbody");
-    const rows = Array.from(tableBody.querySelectorAll("tr"));
-
-    rows.sort((a, b) => {
-        const dateA = parseDate(a.cells[5].innerText);
-        const dateB = parseDate(b.cells[5].innerText);
+    allData.sort((a, b) => {
+        const dateA = parseDate(a.fecha_ingreso);
+        const dateB = parseDate(b.fecha_ingreso);
         return sortAscending ? dateA - dateB : dateB - dateA;
     });
 
     sortAscending = !sortAscending;
+    renderPage();
+}
 
-    tableBody.innerHTML = "";
-    rows.forEach(row => tableBody.appendChild(row));
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function parseDate(dateString) {
+    const [day, month, year] = dateString.split('/').map(Number);
+    return new Date(year, month - 1, day);
 }

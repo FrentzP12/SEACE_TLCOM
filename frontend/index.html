@@ -20,10 +20,10 @@
             <a href="/tenders">Tenders</a>
         </nav>
     </header>
-
     <div class="container">
-        <h2>Buscador de Contrataciones Públicas</h2>
+        <h2>Buscar Items por Múltiples Criterios</h2>
         <form id="search-form" onsubmit="search(event)">
+            <!-- Inputs de búsqueda -->
             <div>
                 <label for="descripcion">Descripción:</label>
                 <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del item">
@@ -46,24 +46,30 @@
             </div>
             <button type="submit" class="btn">Buscar</button>
         </form>
-
-        <div id="row-count">Total de filas: 0</div>
-
-        <table id="results">
-            <thead>
-                <tr>
-                    <th>Comprador</th>
-                    <th>Nomenclatura</th>
-                    <th>Item</th>
-                    <th>Cantidad</th>
-                    <th>Departamento</th>
-                    <th onclick="sortTableByDate()">Fecha de Ingreso ⬍</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+    
+        <div id="results-container">
+            <table id="results">
+                <thead>
+                    <tr>
+                        <th>Comprador</th>
+                        <th>Nomenclatura</th>
+                        <th>Item</th>
+                        <th>Cantidad</th>
+                        <th>Departamento</th>
+                        <th onclick="sortTableByDate()">Fecha de Ingreso ⬍</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Paginación -->
+        <div class="pagination" id="pagination">
+            <!-- Botones generados dinámicamente -->
+        </div>
     </div>
+    
     <script src="/static/js/script.js"></script>
 </body>
 </html>
