@@ -32,6 +32,7 @@ nav {
     justify-content: center;
 }
 
+/* Estilo general para enlaces del navbar */
 nav a {
     text-decoration: none;
     color: white;
@@ -45,21 +46,18 @@ nav a {
 nav a:hover {
     background-color: #0056b3;
 }
-/* Estilo general del navbar */
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color:transparent; /* Cambia según el color deseado */
-    padding: 10px 20px;
-    height: 60px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+/* Evitar que los estilos de nav a afecten al logo */
+.navbar-logo {
+    padding: 0;
+    background: none;
+    border: none;
 }
 
-/* Logo dentro del navbar */
 .navbar-logo img {
-    max-height: 50px; /* Tamaño máximo del logo */
-    object-fit: contain; /* Mantiene las proporciones */
+    display: block;
+    max-height: 50px; /* Ajusta la altura según sea necesario */
+    object-fit: contain;
 }
 
 /* Ajustes para dispositivos móviles */
