@@ -50,7 +50,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #FFA500; /* Cambia según el color deseado */
+    background-color:transparent; /* Cambia según el color deseado */
     padding: 10px 20px;
     height: 60px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
