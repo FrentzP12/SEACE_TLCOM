@@ -33,7 +33,7 @@ app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
-    with open("frontend/index2.html") as f:
+    with open("frontend/index.html") as f:
         html_content = f.read()
     return HTMLResponse(content=html_content)
 
