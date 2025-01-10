@@ -5,7 +5,7 @@ body {
     padding: 0;
     background: url('/static/media/background.png') no-repeat center center fixed;
     background-size: cover;
-    color: #333;
+    color: #1b6306;
 }
 
 /* Cabecera */
@@ -188,7 +188,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #FFA500; /* Naranja */
+    background-color: #007bff; /* Naranja */
     padding: 10px 20px;
     border-radius: 10px;
     margin-top: 20px;
@@ -211,9 +211,9 @@ h2 {
 
 /* Hover y activo */
 .pagination-container button:hover {
-    background-color: #FFD700;
+    background-color: #007bff;
     color: #FFF;
-    border-color: #FFA500;
+    border-color: #007bff;
 }
 
 .pagination-container button.active {
