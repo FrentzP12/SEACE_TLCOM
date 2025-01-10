@@ -38,6 +38,47 @@ async def serve_index():
     return HTMLResponse(content=html_content)
 
 # Resto de endpoints
+@app.get("/buscar_items")
+async def buscar_items(
+    p_descripcion: str = Query(None, description="Descripción del item"),
+    p_departamento: str = Query(None, description="Departamento"),
+    p_comprador: str = Query(None, description="Nombre del comprador"),
+    p_fecha_inicio: str = Query(None, description="Fecha de inicio en formato YYYY-MM-DD"),
+    p_fecha_fin: str = Query(None, description="Fecha de fin en formato YYYY-MM-DD")
+):
+    """
+    Endpoint para buscar items por múltiples criterios.
+    """
+    # Convertir fechas si son proporcionadas
+    fecha_inicio_dt = None
+    fecha_fin_dt = None
+
+    try:
+        if p_fecha_inicio:
+            fecha_inicio_dt = datetime.strptime(p_fecha_inicio, "%Y-%m-%d")
+        if p_fecha_fin:
+            fecha_fin_dt = datetime.strptime(p_fecha_fin, "%Y-%m-%d")
+    except ValueError:
+        return JSONResponse(
+            {"error": "Formato de fecha inválido. Use YYYY-MM-DD."},
+            status_code=400
+        )
+
+    query = """
+    SELECT * FROM buscar_items_multi_criterio($1, $2, $3, $4, $5)
+    """
+    async with app.state.db.acquire() as conn:
+        rows = await conn.fetch(
+            query, 
+            p_descripcion, 
+            p_departamento, 
+            p_comprador, 
+            fecha_inicio_dt, 
+            fecha_fin_dt
+        )
+        result = [dict(row) for row in rows]
+        return result
+
 @app.get("/items")
 async def get_all_items():
     async with app.state.db.acquire() as conn:

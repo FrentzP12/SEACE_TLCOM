@@ -22,17 +22,38 @@
     </header>
 
     <div class="container">
-        <h2>Buscar Contrataciones por Descripción</h2>
-        <input type="text" id="search-input" placeholder="Ingrese palabras clave...">
-        <button class="btn" onclick="search()">Buscar</button>
+        <h2>Buscar Items por Múltiples Criterios</h2>
+        <form id="search-form" onsubmit="search(event)">
+            <div>
+                <label for="descripcion">Descripción:</label>
+                <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del item">
+            </div>
+            <div>
+                <label for="departamento">Departamento:</label>
+                <input type="text" id="departamento" name="departamento" placeholder="Departamento">
+            </div>
+            <div>
+                <label for="comprador">Comprador:</label>
+                <input type="text" id="comprador" name="comprador" placeholder="Nombre del comprador">
+            </div>
+            <div>
+                <label for="fecha_inicio">Fecha de inicio:</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio">
+            </div>
+            <div>
+                <label for="fecha_fin">Fecha de fin:</label>
+                <input type="date" id="fecha_fin" name="fecha_fin">
+            </div>
+            <button type="submit" class="btn">Buscar</button>
+        </form>
 
         <div id="row-count">Total de filas: 0</div>
 
         <table id="results">
             <thead>
                 <tr>
-                    <th>OCID</th>
                     <th>Comprador</th>
+                    <th>Nomenclatura</th>
                     <th>Item</th>
                     <th>Cantidad</th>
                     <th>Departamento</th>
