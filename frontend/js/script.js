@@ -121,7 +121,17 @@ function createPageButtons() {
     const pageButtonsContainer = document.getElementById("page-buttons");
     pageButtonsContainer.innerHTML = "";
 
-    for (let i = 1; i <= totalPages; i++) {
+    const maxVisibleButtons = 5; // Número máximo de botones visibles
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisibleButtons / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
+
+    // Ajustar el rango de botones si se está al inicio o al final
+    if (endPage - startPage + 1 < maxVisibleButtons) {
+        startPage = Math.max(1, endPage - maxVisibleButtons + 1);
+    }
+
+    // Crear los botones dinámicamente
+    for (let i = startPage; i <= endPage; i++) {
         const button = document.createElement("button");
         button.innerText = i;
         button.classList.add(currentPage === i ? "active" : "");
@@ -129,6 +139,7 @@ function createPageButtons() {
         pageButtonsContainer.appendChild(button);
     }
 }
+
 
 // Ir a una página específica
 function goToPage(page) {
@@ -150,6 +161,7 @@ function changePage(action) {
     updatePaginationInfo();
     createPageButtons();
 }
+
 
 // Paginar los datos y mostrarlos en la tabla
 function paginateData() {
