@@ -32,7 +32,6 @@ nav {
     justify-content: center;
 }
 
-/* Estilo general para enlaces del navbar */
 nav a {
     text-decoration: none;
     color: white;
@@ -47,27 +46,10 @@ nav a:hover {
     background-color: #0056b3;
 }
 
-/* Evitar que los estilos de nav a afecten al logo */
-.navbar-logo {
-    padding: 0;
-    background: none;
-    border: none;
-}
-
 .navbar-logo img {
     display: block;
-    max-height: 50px; /* Ajusta la altura según sea necesario */
+    max-height: 50px;
     object-fit: contain;
-}
-
-/* Ajustes para dispositivos móviles */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 10px;
-    }
-    .navbar-logo img {
-        max-height: 40px;
-    }
 }
 
 /* Contenedor principal */
@@ -88,93 +70,7 @@ h2 {
 #results-container {
     overflow-x: auto;
     margin-top: 20px;
-}
-
-#results {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 600px;
-}
-
-#results th,
-#results td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-#results th {
-    background-color: #007bff;
-    color: white;
-}
-
-#results td {
-    word-wrap: break-word;
-    white-space: normal;
-}
-
-/* Botones */
-.btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-
-/* Input de búsqueda */
-#search-input {
-    width: calc(100% - 90px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* Estilos para dispositivos móviles */
-@media (max-width: 600px) {
-    .container {
-        padding: 15px;
-        margin: 10px auto;
-    }
-
-    header h1 {
-        font-size: 1.2rem;
-    }
-
-    nav {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    #search-input {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .btn {
-        width: 100%;
-    }
-
-    #results th,
-    #results td {
-        font-size: 0.9rem;
-    }
-
-    #results {
-        font-size: 0.9rem;
-    }
-}
-/* Tabla */
-#results-container {
-    overflow-x: auto;
-    margin-top: 20px;
-    max-height: 500px; /* Limitar la altura máxima del contenedor */
+    max-height: 500px; /* Limitar la altura máxima */
     overflow-y: auto;
 }
 
@@ -182,8 +78,8 @@ h2 {
     border-collapse: collapse;
     width: 100%;
     min-width: 600px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nueva fuente */
-    font-size: 0.9rem; /* Letra más pequeña */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9rem;
 }
 
 #results th,
@@ -197,7 +93,7 @@ h2 {
     background-color: #007bff;
     color: white;
     position: sticky;
-    top: 0; /* Hacer que los encabezados permanezcan visibles */
+    top: 0;
     z-index: 2;
 }
 
@@ -206,38 +102,29 @@ h2 {
     white-space: normal;
 }
 
-/* Estilos para la paginación */
-/* Estilo del contenedor del paginador */
+/* Botones y paginación */
+.btn,
+.pagination-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn:hover,
+.pagination-container button:hover {
+    background-color: #0056b3;
+}
+
 .pagination-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #007bff; /* Naranja */
-    padding: 10px 20px;
-    border-radius: 10px;
+    gap: 5px;
     margin-top: 20px;
-    color: white;
-    font-weight: bold;
-}
-
-/* Botones del paginador */
-.pagination-container button {
-    background-color: #FFF;
-    color: #333;
-    border: 1px solid #DDD;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin: 0 2px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-/* Hover y activo */
-.pagination-container button:hover {
-    background-color: #007bff;
-    color: #FFF;
-    border-color: #007bff;
 }
 
 .pagination-container button.active {
@@ -246,19 +133,24 @@ h2 {
     font-weight: bold;
 }
 
-.pagination-container {
-    gap: 5px; /* Espaciado entre botones */
-}
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
 
-/* Botones deshabilitados */
-.pagination-container button:disabled {
-    background-color: #DDD;
-    color: #AAA;
-    cursor: not-allowed;
-}
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-/* Información sobre resultados */
-.pagination-info {
-    margin-right: 20px;
-    font-size: 0.9rem;
+    #results th,
+    #results td {
+        font-size: 0.9rem;
+    }
+
+    .btn,
+    #search-input {
+        width: 100%;
+    }
 }
