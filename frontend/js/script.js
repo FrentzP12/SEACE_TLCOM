@@ -51,7 +51,13 @@ function initializePagination(dataArray) {
     createPageButtons(); // Crear los botones de paginación
     updatePaginationInfo(); // Actualizar la información del rango de resultados
 }
-
+function updatePaginationInfo() {
+    const startRow = (currentPage - 1) * itemsPerPage + 1;
+    const endRow = Math.min(currentPage * itemsPerPage, totalRows);
+    const infoContainer = document.getElementById("pagination-info");
+    infoContainer.textContent = 
+        `Mostrando de ${startRow} a ${endRow} del total ${totalRows} - Página: ${currentPage}/${totalPages}`;
+}
 // Renderizar los datos en la tabla
 function renderPage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -97,7 +103,7 @@ function createPageButtons() {
     const pageButtonsContainer = document.getElementById("pagination");
     pageButtonsContainer.innerHTML = "";
 
-    const maxVisibleButtons = 10; // Máximo número de botones visibles
+    const maxVisibleButtons = 5; // Número máximo de botones visibles
     let startPage = Math.max(1, currentPage - Math.floor(maxVisibleButtons / 2));
     let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
 
@@ -105,16 +111,18 @@ function createPageButtons() {
         startPage = Math.max(1, endPage - maxVisibleButtons + 1);
     }
 
-    // Botones de navegación
+    // Agregar botón para ir a la primera página
     if (currentPage > 1) {
         addPaginationButton(pageButtonsContainer, "«", 1);
         addPaginationButton(pageButtonsContainer, "‹", currentPage - 1);
     }
 
+    // Agregar botones numéricos
     for (let i = startPage; i <= endPage; i++) {
         addPaginationButton(pageButtonsContainer, i, i, i === currentPage);
     }
 
+    // Agregar botón para ir a la última página
     if (currentPage < totalPages) {
         addPaginationButton(pageButtonsContainer, "›", currentPage + 1);
         addPaginationButton(pageButtonsContainer, "»", totalPages);
