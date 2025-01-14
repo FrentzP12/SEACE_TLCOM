@@ -97,6 +97,10 @@ function updatePaginationInfo() {
     document.getElementById("pagination-info").innerText = 
         `Mostrando de ${startRow} a ${endRow} del total ${totalRows} - Página: ${currentPage}/${totalPages}`;
 }
+function renderPage(pageNumber) {
+    // Lógica para renderizar la página específica.
+    console.log('Renderizando página: ', pageNumber);
+}
 
 // Crear los botones de paginación dinámicamente
 function createPageButtons() {
@@ -136,9 +140,8 @@ function goToPreviousPage() {
 }
 
 function goToNextPage() {
-    if (currentPage < totalPages) {
-        goToPage(currentPage + 1);
-    }
+    currentPage++; // Asumiendo que tienes una variable global currentPage.
+    renderPage(currentPage); // Renderizas la nueva página.
 }
 // Ir a una página específica
 function goToPage(page) {
@@ -146,8 +149,11 @@ function goToPage(page) {
     renderPage();
 }
 function changeItemsPerPage() {
-    itemsPerPage = parseInt(document.getElementById("itemsPerPageSelect").value, 10);
-    initializePagination(allData);
+    let select = document.getElementById('itemsPerPage');
+    let itemsPerPage = parseInt(select.value);
+    // Aquí puedes agregar la lógica para cambiar el número de elementos por página.
+    console.log('Items por página cambiados a: ', itemsPerPage);
+    renderPage(1); // Llamamos a renderPage con la nueva configuración.
 }
 // Ordenar los datos por fecha
 function sortTableByDate() {
