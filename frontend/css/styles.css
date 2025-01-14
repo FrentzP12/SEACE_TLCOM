@@ -210,43 +210,48 @@ h2 {
 /* Estilo del contenedor del paginador */
 .pagination-container {
     display: flex;
-    justify-content: center; /* Centrar los botones */
+    justify-content: center;
     align-items: center;
-    gap: 10px; /* Espaciado entre botones */
-    overflow: hidden; /* Evita el desbordamiento */
-    max-width: 100%; /* Ajusta al ancho del contenedor */
+    gap: 10px;
     padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  .pagination-buttons {
+    flex-wrap: wrap;
+}
+
+.pagination-buttons {
     display: flex;
-    gap: 5px; /* Espaciado entre los botones */
-    overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
-    scrollbar-width: thin; /* Opcional: Reduce el ancho del scrollbar en navegadores compatibles */
-  }
-  
-  .pagination-btn {
+    gap: 5px;
+    overflow: hidden;
+    max-width: 50%; /* Ajusta según tu preferencia */
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
     padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f9f9f9;
     color: #333;
     cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .pagination-btn.active {
+    transition: background 0.3s;
+}
+
+.pagination-btn.active {
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
-  }
-  
-  .pagination-btn:hover {
+}
+
+.pagination-btn:hover:not(.active) {
     background-color: #e7e7e7;
-  }
-  
-  .pagination-btn:disabled {
+}
+
+.pagination-btn:disabled {
     background-color: #ddd;
     cursor: not-allowed;
-  }
+}
+
+#itemsPerPageSelect {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

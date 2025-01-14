@@ -100,10 +100,10 @@ function updatePaginationInfo() {
 
 // Crear los botones de paginación dinámicamente
 function createPageButtons() {
-    const pageButtonsContainer = document.getElementById("pagination");
+    const pageButtonsContainer = document.querySelector(".pagination-buttons");
     pageButtonsContainer.innerHTML = "";
 
-    const maxVisibleButtons = 5; // Número máximo de botones visibles
+    const maxVisibleButtons = 5; // Número máximo de botones visibles a la vez
     let startPage = Math.max(1, currentPage - Math.floor(maxVisibleButtons / 2));
     let endPage = Math.min(totalPages, startPage + maxVisibleButtons - 1);
 
@@ -111,24 +111,15 @@ function createPageButtons() {
         startPage = Math.max(1, endPage - maxVisibleButtons + 1);
     }
 
-    // Agregar botón para ir a la primera página
-    if (currentPage > 1) {
-        addPaginationButton(pageButtonsContainer, "«", 1);
-        addPaginationButton(pageButtonsContainer, "‹", currentPage - 1);
-    }
-
-    // Agregar botones numéricos
     for (let i = startPage; i <= endPage; i++) {
-        addPaginationButton(pageButtonsContainer, i, i, i === currentPage);
-    }
-
-    // Agregar botón para ir a la última página
-    if (currentPage < totalPages) {
-        addPaginationButton(pageButtonsContainer, "›", currentPage + 1);
-        addPaginationButton(pageButtonsContainer, "»", totalPages);
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.className = "pagination-btn" + (i === currentPage ? " active" : "");
+        button.disabled = i === currentPage;
+        button.onclick = () => goToPage(i);
+        pageButtonsContainer.appendChild(button);
     }
 }
-
 // Función para añadir un botón de paginación
 function addPaginationButton(container, text, page, isActive = false) {
     const button = document.createElement("button");
@@ -138,14 +129,26 @@ function addPaginationButton(container, text, page, isActive = false) {
     button.onclick = () => goToPage(page);
     container.appendChild(button);
 }
+function goToPreviousPage() {
+    if (currentPage > 1) {
+        goToPage(currentPage - 1);
+    }
+}
 
+function goToNextPage() {
+    if (currentPage < totalPages) {
+        goToPage(currentPage + 1);
+    }
+}
 // Ir a una página específica
 function goToPage(page) {
-    if (page < 1 || page > totalPages) return;
     currentPage = page;
     renderPage();
 }
-
+function changeItemsPerPage() {
+    itemsPerPage = parseInt(document.getElementById("itemsPerPageSelect").value, 10);
+    initializePagination(allData);
+}
 // Ordenar los datos por fecha
 function sortTableByDate() {
     allData.sort((a, b) => {
