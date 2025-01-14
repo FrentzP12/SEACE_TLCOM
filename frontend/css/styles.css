@@ -250,30 +250,3 @@ h2 {
     background-color: #ddd;
     cursor: not-allowed;
   }
-  
-
-  /*revisar*/
-
-  .pagination-buttons button {
-    padding: 5px 10px;
-    margin: 0 2px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.pagination-buttons button.active {
-    background-color: #007bff;
-    color: white;
-}
-
-.pagination-buttons button:hover {
-    background-color: #e7e7e7;
-}
-
-.pagination-buttons button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-}
