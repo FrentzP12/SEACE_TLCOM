@@ -136,6 +136,13 @@ h2 {
     border-radius: 5px;
 }
 
+/* Contenedor de los botones */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espacio entre botones */
+    margin-top: 20px;
+}
 /* Botones */
 .btn {
     background-color: #007bff;
@@ -146,7 +153,6 @@ h2 {
     cursor: pointer;
     transition: background 0.3s ease;
 }
-
 .btn:hover {
     background-color: #0056b3;
 }

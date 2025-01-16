@@ -123,7 +123,13 @@ function renderPagination() {
         pagination.appendChild(createPaginationButton('»', currentPage + 1));
     }
 }
-
+function clearFields() {
+    // Seleccionar todos los inputs dentro del formulario
+    const inputs = document.querySelectorAll('#search-form input[type="text"], #search-form input[type="date"]');
+    
+    // Limpiar cada input
+    inputs.forEach(input => input.value = '');
+}
 function createPaginationButton(label, page) {
     const button = document.createElement('button');
     button.innerText = label;
