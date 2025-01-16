@@ -109,39 +109,3 @@ async def get_all_buyers():
     async with app.state.db.acquire() as conn:
         rows = await conn.fetch("SELECT * FROM buyers ")
         return rows       
-@app.get("/contrataciones/{departamento}")
-async def buscar_contrataciones_por_departamento(departamento: str):
-    query = "SELECT * FROM buscar_contrataciones_por_departamento($1)"
-    async with app.state.db.acquire() as conn:
-                rows = await conn.fetch(query, departamento)
-                result = [dict(row) for row in rows]
-                return result
-    
-@app.get("/buscar_descripcion/{descripcion}")
-async def buscar_por_descripcion_item(descripcion: str):
-    query = "SELECT * FROM buscar_por_descripcion_item($1)"
-    async with app.state.db.acquire() as conn:
-        rows = await conn.fetch(query, descripcion)
-        result = [dict(row) for row in rows]
-        return result
-    
-@app.get("/buscar_por_fecha")
-async def buscar_por_fecha(
-    fecha_inicio: str = Query(..., description="Fecha de inicio en formato YYYY-MM-DD"),
-    fecha_fin: str = Query(..., description="Fecha de fin en formato YYYY-MM-DD")
-):
-    # Convertir las cadenas a objetos datetime.date
-    try:
-        fecha_inicio_dt = datetime.strptime(fecha_inicio, "%Y-%m-%d").date()
-        fecha_fin_dt = datetime.strptime(fecha_fin, "%Y-%m-%d").date()
-    except ValueError:
-        return JSONResponse(
-            {"error": "Formato de fecha inválido. Use YYYY-MM-DD."},
-            status_code=400
-        )
-
-    query = "SELECT * FROM buscar_por_fecha_contrataciones($1, $2)"
-    async with app.state.db.acquire() as conn:
-        rows = await conn.fetch(query, fecha_inicio_dt, fecha_fin_dt)
-        result = [dict(row) for row in rows]
-        return result
