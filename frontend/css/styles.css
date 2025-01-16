@@ -112,6 +112,29 @@ h2 {
     word-wrap: break-word;
     white-space: normal;
 }
+/* Contenedor de cada fila del formulario */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Etiquetas e inputs */
+.form-row label {
+    flex: 1;
+    min-width: 150px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.form-row input {
+    flex: 2;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
 
 /* Botones */
 .btn {
@@ -137,7 +160,7 @@ h2 {
 }
 
 /* Estilos para dispositivos móviles */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .container {
         padding: 15px;
         margin: 10px auto;
@@ -156,7 +179,14 @@ h2 {
         width: 100%;
         margin-bottom: 10px;
     }
-
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-row label {
+        margin-bottom: 5px;
+    }
     .btn {
         width: 100%;
     }
