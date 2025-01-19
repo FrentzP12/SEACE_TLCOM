@@ -245,11 +245,13 @@ h2 {
     position: sticky;
     top: 0; /* Hacer que los encabezados permanezcan visibles */
     z-index: 2;
+    text-align: center;
 }
 
 #results td {
     word-wrap: break-word;
     white-space: normal;
+    text-align: center;
 }
 
 .pagination {
