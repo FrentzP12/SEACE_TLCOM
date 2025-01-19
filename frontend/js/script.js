@@ -84,6 +84,10 @@ function renderPage() {
 
     pageData.forEach(item => {
         const row = document.createElement('tr');
+        // Crear enlaces para documentos separados por coma
+        const documentosHTML = item.documentos
+        ? item.documentos.split(', ').map(url => `<a href="${url}" target="_blank">Descargar</a>`).join(' | ')
+        : 'N/A';
         row.innerHTML = `
             <td>${item.comprador}</td>
             <td>${item.nomenclatura}</td>
@@ -91,6 +95,7 @@ function renderPage() {
             <td>${item.cantidad}</td>
             <td>${item.departamento}</td>
             <td>${item.fecha_ingreso}</td>
+            <td>${documentosHTML}</td>
         `;
         tbody.appendChild(row);
     });
