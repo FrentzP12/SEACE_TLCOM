@@ -78,7 +78,7 @@ async def buscar_items(
         )
         result = [dict(row) for row in rows]
         return result
-
+#ENDPOINTS DE PRUEBA
 @app.get("/items")
 async def get_all_items():
     async with app.state.db.acquire() as conn:
