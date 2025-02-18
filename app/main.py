@@ -41,9 +41,9 @@ async def serve_index():
 @app.get("/buscar_items")
 async def buscar_items(
     p_descripcion: str = Query(None, description="Descripción del item"),
-    p_nomenclatura: str = Query(None, description="Nomenclatura del item"),
     p_departamento: str = Query(None, description="Departamento"),
     p_comprador: str = Query(None, description="Nombre del comprador"),
+    p_nomenclatura: str = Query(None, description="Nomenclatura del item"),
     p_fecha_inicio: str = Query(None, description="Fecha de inicio en formato YYYY-MM-DD"),
     p_fecha_fin: str = Query(None, description="Fecha de fin en formato YYYY-MM-DD")
 ):

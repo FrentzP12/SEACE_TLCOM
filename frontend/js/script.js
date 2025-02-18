@@ -10,17 +10,17 @@ async function search(event) {
     event.preventDefault();
 
     const descripcion = document.getElementById("descripcion").value;
-    const nomenclatura = document.getElementById("nomenclatura").value;
     const departamento = document.getElementById("departamento").value;
     const comprador = document.getElementById("comprador").value;
+    const nomenclatura = document.getElementById("nomenclatura").value;
     const fecha_inicio = document.getElementById("fecha_inicio").value;
     const fecha_fin = document.getElementById("fecha_fin").value;
 
     const params = new URLSearchParams({
         p_descripcion: descripcion || "",
-        p_nomenclatura: nomenclatura || "",
         p_departamento: departamento || "",
         p_comprador: comprador || "",
+        p_nomenclatura: nomenclatura || "",
         p_fecha_inicio: fecha_inicio || "",
         p_fecha_fin: fecha_fin || ""
     });
