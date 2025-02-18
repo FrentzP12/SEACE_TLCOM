@@ -10,6 +10,7 @@ async function search(event) {
     event.preventDefault();
 
     const descripcion = document.getElementById("descripcion").value;
+    const nomenclatura = document.getElementById("nomenclatura").value;
     const departamento = document.getElementById("departamento").value;
     const comprador = document.getElementById("comprador").value;
     const fecha_inicio = document.getElementById("fecha_inicio").value;
@@ -17,6 +18,7 @@ async function search(event) {
 
     const params = new URLSearchParams({
         p_descripcion: descripcion || "",
+        p_nomenclatura: nomenclatura || "",
         p_departamento: departamento || "",
         p_comprador: comprador || "",
         p_fecha_inicio: fecha_inicio || "",
