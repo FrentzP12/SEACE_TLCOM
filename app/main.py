@@ -43,7 +43,6 @@ async def buscar_items(
     p_descripcion: str = Query(None, description="Descripción del item"),
     p_departamento: str = Query(None, description="Departamento"),
     p_comprador: str = Query(None, description="Nombre del comprador"),
-    p_nomenclatura: str = Query(None, description="Nomenclatura del item"),
     p_fecha_inicio: str = Query(None, description="Fecha de inicio en formato YYYY-MM-DD"),
     p_fecha_fin: str = Query(None, description="Fecha de fin en formato YYYY-MM-DD")
 ):
@@ -66,7 +65,7 @@ async def buscar_items(
         )
 
     query = """
-    SELECT * FROM buscar_items_multi_criterio($1, $2, $3, $4, $5, $6)
+    SELECT * FROM buscar_items_multi_criterio($1, $2, $3, $4, $5)
     """
     async with app.state.db.acquire() as conn:
         rows = await conn.fetch(
@@ -74,7 +73,6 @@ async def buscar_items(
             p_descripcion, 
             p_departamento, 
             p_comprador, 
-            p_nomenclatura,
             fecha_inicio_dt, 
             fecha_fin_dt
         )

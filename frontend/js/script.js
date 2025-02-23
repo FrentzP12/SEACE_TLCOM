@@ -12,7 +12,6 @@ async function search(event) {
     const descripcion = document.getElementById("descripcion").value;
     const departamento = document.getElementById("departamento").value;
     const comprador = document.getElementById("comprador").value;
-    const nomenclatura = document.getElementById("nomenclatura").value;
     const fecha_inicio = document.getElementById("fecha_inicio").value;
     const fecha_fin = document.getElementById("fecha_fin").value;
 
@@ -20,7 +19,6 @@ async function search(event) {
         p_descripcion: descripcion || "",
         p_departamento: departamento || "",
         p_comprador: comprador || "",
-        p_nomenclatura: nomenclatura || "",
         p_fecha_inicio: fecha_inicio || "",
         p_fecha_fin: fecha_fin || ""
     });
